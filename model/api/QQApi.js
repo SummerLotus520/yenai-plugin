@@ -429,7 +429,7 @@ export default class {
   async thumbUp(uid, times = 1) {
     if (this.e?.adapter && this.e?.adapter == "shamrock") {
       // 劫持为shamrock点赞
-      let target = (e.at && e.msg.includes('他', '她', '它', 'TA', 'ta', 'Ta')) ? e.at : e.user_id
+      let target = (this.e.at && this.e.msg.includes('他', '她', '它', 'TA', 'ta', 'Ta')) ? this.e.at : this.e.user_id
       let lock = await redis.get(`lain:thumbup:${this.e.self_id}_${target}`)
 
       // shamrock不管点没点上一律返回ok。。只好自己伪造了，不然椰奶会死循环，暂不考虑svip的情况。
