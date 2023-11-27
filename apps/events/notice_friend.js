@@ -11,8 +11,8 @@ Bot.on?.('notice.friend', async (e) => {
       msg = [
         segment.image(`https://q1.qlogo.cn/g?b=qq&s=100&nk=${e.user_id}`),
         `[通知(${e.self_id}) - 新增好友]\n`,
-          `好友账号：${e.user_id}\n`,
-          `好友昵称：${e.nickname}`
+        `好友账号：${e.user_id}\n`,
+        `好友昵称：${e.nickname}`
       ]
       break
     }
@@ -22,8 +22,8 @@ Bot.on?.('notice.friend', async (e) => {
       msg = [
         segment.image(`https://q1.qlogo.cn/g?b=qq&s=100&nk=${e.user_id}`),
         `[通知(${e.self_id}) - 好友减少]\n`,
-          `好友账号：${e.user_id}\n`,
-          `好友昵称：${e.nickname}`
+        `好友账号：${e.user_id}\n`,
+        `好友昵称：${e.nickname}`
       ]
       break
     }
@@ -66,10 +66,10 @@ Bot.on?.('notice.friend', async (e) => {
       msg = [
         segment.image(`https://q1.qlogo.cn/g?b=qq&s=100&nk=${e.user_id}`),
         `[消息(${e.self_id}) - 好友撤回消息]\n`,
-          `好友账号：${e.user_id}\n`,
-          `撤回时间：${formatDate(e.time)}\n`,
-          '撤回消息：',
-          ...res
+        `好友账号：${e.user_id}\n`,
+        `撤回时间：${formatDate(e.time)}\n`,
+        '撤回消息：',
+        ...res
       ]
       break
     }
@@ -79,20 +79,20 @@ Bot.on?.('notice.friend', async (e) => {
       msg = [
         segment.image(`https://q1.qlogo.cn/g?b=qq&s=100&nk=${e.user_id}`),
         `[消息(${e.self_id}) - 戳一戳]\n`,
-          `来源账号：${e.user_id}`
+        `来源账号：${e.user_id}`
       ]
       break
     }
     default:
       return false
   }
-  await common.sendMasterMsg(msg)
-  if (forwardMsg) await common.sendMasterMsg(forwardMsg)
+  await common.sendMasterMsg(msg, e.self_id)
+  if (forwardMsg) await common.sendMasterMsg(forwardMsg, e.self_id)
 }
 )
 
 /** 时间转换 */
-function formatDate (time) {
+function formatDate(time) {
   let now = new Date(parseFloat(time) * 1000)
   // 月
   let month = now.getMonth() + 1

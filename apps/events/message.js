@@ -170,11 +170,11 @@ Bot.on?.('message', async (e) => {
     return false
   }
   // 发送消息
-  await common.sendMasterMsg(msg)
-  if (forwardMsg) await common.sendMasterMsg(forwardMsg)
+  await common.sendMasterMsg(msg, e.self_id)
+  if (forwardMsg) await common.sendMasterMsg(forwardMsg, e.self_id)
 })
 // 特殊消息处理
-function getMsgType (msg) {
+function getMsgType(msg) {
   const msgType = {
     record: {
       msg: segment.record(msg[0].url),
