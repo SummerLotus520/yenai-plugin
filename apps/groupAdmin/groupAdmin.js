@@ -455,6 +455,9 @@ export class GroupAdmin extends plugin {
 
     // 确认清理直接执行
     if (/^#?确认清理/.test(e.msg)) {
+      if (/秒|分钟|小时/g.test(e.msg)) {
+        return e.reply('不支持清理以秒、分钟、小时为单位的事件', true)
+      }
       e.reply('我要开始清理了哦，这可能需要一点时间٩(๑•ㅂ•)۶')
       let arr = list.map(item => item.user_id)
       let msg = await new Ga(e).BatchKickMember(e.group_id, arr)
