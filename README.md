@@ -40,16 +40,21 @@
 
 ## 安装教程 💡
 
+适配`shamrock`的椰奶，椰奶原仓库快速迁移到本仓库
+```
+git remote set-url origin https://gitee.com/Zyy955/yenai-plugin.git && git reset --hard origin/main
+```
+
 请将Yenai-Plugin放置在Yunzai-Bot的plugins目录下，重启Yunzai-Bot后即可使用。
 
 1. 推荐使用git进行安装，以方便后续升级。在Yunzai目录打开终端，运行
 
 ```
 // 使用github
-git clone --depth=1 https://github.com/yeyang52/yenai-plugin.git ./plugins/yenai-plugin
+git clone --depth=1 https://github.com/Zyy955/yenai-plugin.git ./plugins/yenai-plugin
 
 // 使用gitee(可能更新不及时)
-git clone --depth=1 https://gitee.com/yeyang52/yenai-plugin.git ./plugins/yenai-plugin
+git clone --depth=1 https://gitee.com/Zyy955/yenai-plugin.git ./plugins/yenai-plugin
 ```
 
 2. 安装依赖(可选：不安装依赖将无法使用一些功能)
