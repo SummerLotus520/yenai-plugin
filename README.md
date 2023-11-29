@@ -40,15 +40,10 @@
 
 ## 安装教程 💡
 
-适配`shamrock`的椰奶，椰奶原仓库快速迁移到本仓库
-方法1:在`Miao-Yunzai根目录`执行
-```
-cd plugins/yenai-plugin && git remote set-url origin https://gitee.com/Zyy955/yenai-plugin.git && git reset --hard origin/main
-```
-方法2:在`yenai-plugin目录`下执行
-```
-git remote set-url origin https://gitee.com/Zyy955/yenai-plugin.git && git reset --hard origin/main
-```
+# 适配`shamrock`的椰奶，请将椰奶原插件删除后重新clone本项目
+# 适配`shamrock`的椰奶，请将椰奶原插件删除后重新clone本项目
+# 适配`shamrock`的椰奶，请将椰奶原插件删除后重新clone本项目
+
 
 请将Yenai-Plugin放置在Yunzai-Bot的plugins目录下，重启Yunzai-Bot后即可使用。
 
