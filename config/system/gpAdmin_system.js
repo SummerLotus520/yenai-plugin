@@ -197,7 +197,27 @@ export const helpList = [{
     }, {
       title: '#群发言榜单(7天)?',
       desc: '不加7天查看昨天的数据',
-      icon: 16
+      icon: 8
+    }, {
+      title: '#群龙王榜?',
+      desc: '龙王争霸榜单',
+      icon: 9
+    }, {
+      title: '#群管理员榜',
+      desc: '管理员排行榜',
+      icon: 10
+    }, {
+      title: '#群屠龙榜',
+      desc: '屠龙排行榜',
+      icon: 12
+    }, {
+      title: '#群(等级)?积分(上升)?榜',
+      desc: '等级积分上升排行榜',
+      icon: 13
+    }, {
+      title: '#群全部榜单',
+      desc: '等级积分上升排行榜',
+      icon: 14
     }
   ]
 },
