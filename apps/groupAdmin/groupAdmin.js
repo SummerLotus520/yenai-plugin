@@ -128,24 +128,28 @@ export class GroupAdmin extends plugin {
           fnc: 'Group_xj'
         },
         {
-          reg: '^#群管理员榜$',
+          reg: '^#群?管理员榜$',
           fnc: 'Group_gly'
         },
         {
-          reg: '^#群龙王(争霸)?榜$',
+          reg: '^#群?龙王(争霸)?榜$',
           fnc: 'Group_lw'
         },
         {
-          reg: '^#群屠龙榜$',
+          reg: '^#群?屠龙榜$',
           fnc: 'Group_tl'
         },
         {
-          reg: '^#群(全部)?榜(单)?$',
+          reg: '^#群?(全部)?榜(单)?$',
           fnc: 'Group_rank'
         },
         {
-          reg: '^#群(等级)?积分(上升)?榜$',
+          reg: '^#群?(等级)?积分(上升)?榜$',
           fnc: 'Group_scoreincr'
+        },
+        {
+          reg: '^#群?等级榜$',
+          fnc: 'Group_level'
         },
         {
           reg: '^#群数据((7|七)天)?$',
@@ -644,10 +648,21 @@ export class GroupAdmin extends plugin {
     if (screenshot) return e.reply(screenshot)
   }
 
-  /** 群管理员榜 */
+  /** 群积分上升榜 */
   async Group_scoreincr (e) {
     let screenshot = await puppeteer.Webpage({
       url: `https://qun.qq.com/active/rank/list?gc=${e.group_id}&type=scoreincr&_wwv=128&_wv=16777218`,
+      cookie: common.getck('qun.qq.com', this.Bot, true),
+      emulate: 'QQTheme',
+      font: true
+    })
+    if (screenshot) return e.reply(screenshot)
+  }
+
+  /** 群等级榜 */
+  async Group_level (e) {
+    let screenshot = await puppeteer.Webpage({
+      url: `https://qun.qq.com/interactive/levellist?gc=${e.group_id}&type=7&_wwv=3&_wv=128`,
       cookie: common.getck('qun.qq.com', this.Bot, true),
       emulate: 'QQTheme',
       font: true

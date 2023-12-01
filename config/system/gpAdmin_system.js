@@ -218,6 +218,10 @@ export const helpList = [{
       title: '#群全部榜单',
       desc: '等级积分上升排行榜',
       icon: 14
+    }, {
+      title: '#群等级榜',
+      desc: '群等级排行榜',
+      icon: 15
     }
   ]
 },
