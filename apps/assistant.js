@@ -1,11 +1,12 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import { common, QQApi } from '../model/index.js'
-import { Version } from '../components/index.js'
+import { Version, YamlReader } from '../components/index.js'
 import _ from 'lodash'
 import moment from 'moment'
 import { status } from '../constants/other.js'
 import yaml from 'yaml'
 import fs from 'node:fs'
+
 /** API请求错误文案 */
 const API_ERROR = '❎ 出错辣，请稍后重试'
 
@@ -140,7 +141,7 @@ export class Assistant extends plugin {
 
   /** 改头像 */
   async SetAvatar(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     if (!e.img) {
       this.setContext('_avatarContext')
       e.reply('⚠ 请发送图片')
@@ -179,7 +180,7 @@ export class Assistant extends plugin {
 
   /** 改昵称 */
   async SetNickname(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let name = e.msg.replace(/#|改昵称/g, '').trim()
 
     await this.Bot.setNickname(name)
@@ -192,7 +193,7 @@ export class Assistant extends plugin {
 
   /** 改群名片 */
   async SetGroupCard(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let group = ''
     let card = ''
 
@@ -279,7 +280,7 @@ export class Assistant extends plugin {
 
   /** 改群昵称 */
   async SetGroupName(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let group = ''
     let card = ''
 
@@ -316,7 +317,7 @@ export class Assistant extends plugin {
 
   /** 改签名 */
   async SetSignature(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let signs = e.msg.replace(/#|改签名/g, '').trim()
     await this.Bot.setSignature(signs)
       .then(() => e.reply('✅ 签名修改成功'))
@@ -328,7 +329,7 @@ export class Assistant extends plugin {
 
   /** 改状态 */
   async SetOnlineStatus(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let signs = e.msg.replace(/#|改状态/g, '').trim()
 
     if (!signs) return e.reply('❎ 状态不为空，可选值：我在线上，离开，隐身，忙碌，Q我吧，请勿打扰')
@@ -347,7 +348,7 @@ export class Assistant extends plugin {
 
   /** 发好友 */
   async SendFriendMsg(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let regRet = FriendsReg.exec(e.msg)
     let qq = regRet[1]
     e.message[0].text = regRet[2]
@@ -366,7 +367,7 @@ export class Assistant extends plugin {
 
   /** 发群聊 */
   async SendGroupMsg(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let regRet = GroupMsgReg.exec(e.msg)
 
     let gpid = regRet[1]
@@ -388,7 +389,7 @@ export class Assistant extends plugin {
 
   // 发送群列表
   async SendGroupListMsg(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     // 获取参数
     let regRet = GroupListMsgReg.exec(e.msg)
     let gpid = regRet[1]
@@ -439,7 +440,7 @@ export class Assistant extends plugin {
 
   /** 退群 */
   async QuitGroup(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let quits = e.msg.replace(/#|退群/g, '').trim()
 
     if (!quits) return e.reply('❎ 群号不能为空')
@@ -458,7 +459,7 @@ export class Assistant extends plugin {
 
   /** 删好友 */
   async DeleteFriend(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let quits = e.msg.replace(/#|删好友/g, '').trim()
 
     if (e.message[1]) {
@@ -480,7 +481,7 @@ export class Assistant extends plugin {
 
   /** 改性别 */
   async SetGender(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let sex = e.msg.replace(/#|改性别/g, '').trim()
 
     if (!sex) return e.reply('❎ 性别不能为空 可选值：男，女，无\n（改为无，为无性别）')
@@ -584,7 +585,7 @@ export class Assistant extends plugin {
 
   /** QQ空间 说说列表 */
   async Qzonelist(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let page = e.msg.replace(/#|获?取说说列表/g, '').trim()
     if (!page) {
       page = 0
@@ -610,7 +611,7 @@ export class Assistant extends plugin {
 
   /** 删除说说 */
   async Qzonedel(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let pos = e.msg.match(/\d+/)
     // 获取说说列表
     let list = await new QQApi(e).getQzone(1, pos - 1)
@@ -633,7 +634,7 @@ export class Assistant extends plugin {
 
   /** 发说说 */
   async Qzonesay(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let con = e.msg.replace(/#|发说说/g, '').trim()
     let result = await new QQApi(e).setQzone(con, e.img)
     if (!result) return e.reply(API_ERROR)
@@ -650,7 +651,7 @@ export class Assistant extends plugin {
 
   /** 清空说说和留言 */
   async QzonedelAll(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     if (/清空说说/.test(e.msg)) {
       this.setContext('_QzonedelAllContext')
       e.reply('✳️ 即将删除全部说说请发送：\n' + '------确认清空或取消------')
@@ -688,7 +689,7 @@ export class Assistant extends plugin {
 
   // 获取群|好友列表
   async GlOrFl(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let msg = []
     if (/群列表/.test(e.msg)) {
       // 获取群列表并转换为数组
@@ -763,7 +764,7 @@ export class Assistant extends plugin {
 
   // 开关好友添加
   async FriendSwitch(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let res = await new QQApi(e).addFriendSwitch(/开启/.test(e.msg) ? 1 : 2)
     if (!res) return e.reply(API_ERROR)
     e.reply(res.ActionStatus)
@@ -771,7 +772,7 @@ export class Assistant extends plugin {
 
   // 好友申请方式
   async FriendType(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let regRet = friendTypeReg.exec(e.msg)
     if (regRet[1] == 0) return e.reply('1为允许所有人，2为需要验证，3为问答正确问答(需填问题和答案，格式为：#更改好友申请方式3 问题 答案)')
     // 单独处理
@@ -785,7 +786,7 @@ export class Assistant extends plugin {
 
   /** 开关戳一戳 */
   async Cyc(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let result = await new QQApi(e).setcyc(/开启/.test(e.msg) ? 0 : 1)
     if (!result) return e.reply(API_ERROR)
 
@@ -794,91 +795,47 @@ export class Assistant extends plugin {
   }
 
   async setModel(e) {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     let model = e.msg.replace(/#|设置机型/g, '')
     let res = await new QQApi(e).setModel(model).catch(err => logger.error(err))
     e.reply(_.get(res, ['13031', 'data', 'rsp', 'iRet']) == 0 ? '设置成功' : '设置失败')
   }
 
+  /** 拉黑 */
   async BlockOne() {
-    if (!(this.e.isMaster)) { return true }
-    const configPath = process.cwd().replace(/\\/g, '/') + '/config/config/other.yaml'
-    /** 判断at */
-    if (Number(this.e.at) || String(this.e.at)) {
-      try {
-        const yamlContentBuffer = await fs.promises.readFile(configPath)
-        /** 转字符串 */
-        const yamlContent = yamlContentBuffer.toString('utf-8')
-        const data = yaml.parse(yamlContent)
-        if (!data.blackQQ.includes(Number(this.e.at) || String(this.e.at))) {
-          data.blackQQ.push(Number(this.e.at) || String(this.e.at))
-          const updatedYaml = yaml.stringify(data, { quote: false })
-          /** 删除引号 */
-          const resultYaml = updatedYaml.replace(/"/g, '')
-          await fs.promises.writeFile(configPath, resultYaml, 'utf-8')
-          await this.e.reply(`✅ 已拉黑${Number(this.e.at) || String(this.e.at)}`)
-        } else {
-          await this.e.reply(`❎ 拉黑失败，黑名单中已存在`)
-        }
-      } catch (error) {
-        await this.e.reply(`❎ 拉黑失败，发生了未知的错误`)
-        logger.error(error)
-      }
+    if (!(this.e.isMaster)) return true
+    let user_id = this.e.at || this.e.msg.replace(/#|[\u4e00-\u9fa5]/g, "").trim()
+    user_id = Number(user_id) || String(user_id)
+    if (!user_id) return await this.e.reply(`❎ 拉黑失败，没有键入用户ID或群号`)
+
+    if (this.e.msg.includes("群")) {
+      const result = await this.addToBlacklist("blackGroup", user_id)
+      return await this.e.reply(result)
     } else {
-      /** 非TRSS-Yunzai仅匹配5-10位非0开头数字 */
-      if (!Version.name == `TRSS-Yunzai`) {
-        const regex = /^#?拉黑(群|群聊)?[1-9]\d{4,9}$/
-        const match = this.e.msg.match(regex)
-        if (match) {
-          const blackId = match[3]
-          if (/^\d+$/.test(blackId)) {
-            this.blackResult = blackId
-          } else {
-            await this.e.reply(`❎ 拉黑失败，QQ或群号不合法`)
-          }
-        }
-      } else {
-        /** TRSS-Yunzai匹配所有字符 */
-        const blackId = this.e.msg.replace(/#|拉黑|群|群聊/g, '').trim()
-        if (blackId == "") {
-          await this.e.reply(`❎ 拉黑失败，没有键入QQ或群号`)
-          return true
-        }
-        this.blackResult = Number(blackId) || String(blackId)
-      }
+      const result = await this.addToBlacklist("blackQQ", user_id)
+      return await this.e.reply(result)
+    }
+  }
+
+  /** 增加拉黑人员、群 */
+  async addToBlacklist(blacklistName, userId) {
+    const configPath = process.cwd() + '/config/config/other.yaml'
+    let other = new YamlReader(configPath)
+    const blacklist = other.get(blacklistName)
+    if (blacklist.includes(userId)) {
+      return `❎ 拉黑失败，黑名单中已存在`
+    } else {
       try {
-        const yamlContentBuffer = await fs.promises.readFile(configPath)
-        const yamlContent = yamlContentBuffer.toString('utf-8')
-        const data = yaml.parse(yamlContent)
-        if (!this.e.msg.includes(`群`)) {
-          if (!data.blackQQ.includes(this.blackResult)) {
-            data.blackQQ.push(this.blackResult)
-            const updatedYaml = yaml.stringify(data, { quote: false })
-            const resultYaml = updatedYaml.replace(/"/g, '')
-            await fs.promises.writeFile(configPath, resultYaml, 'utf-8')
-            await this.e.reply(`✅ 已拉黑${this.blackResult}`)
-          } else {
-            await this.e.reply(`❎ 拉黑失败，${this.blackResult}在黑名单中已存在`)
-          }
-        } else {
-          if (!data.blackGroup.includes(this.blackResult)) {
-            data.blackGroup.push(this.blackResult)
-            const updatedYaml = yaml.stringify(data, { quote: false })
-            const resultYaml = updatedYaml.replace(/"/g, '')
-            await fs.promises.writeFile(configPath, resultYaml, 'utf-8')
-            await this.e.reply(`✅ 已拉黑群聊${this.blackResult}`)
-          } else {
-            await this.e.reply(`❎ 拉黑失败，${this.blackResult}在黑名单中已存在`)
-          }
-        }
+        other.addIn(blacklistName, userId)
+        return `✅ 已拉黑${userId}`
       } catch (error) {
-        await this.e.reply(`❎ 拉黑失败，发生了未知的错误`)
-        logger.error(error)
+        return `❎ 拉黑失败：${error?.message || error}`
       }
     }
   }
+
   async CancelBlockOne() {
-    if (!(this.e.isMaster)) { return true }
+    if (!(this.e.isMaster)) return true
     const configPath = process.cwd().replace(/\\/g, '/') + '/config/config/other.yaml'
     if (Number(this.e.at) || String(this.e.at)) {
       try {
