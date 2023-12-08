@@ -31,6 +31,14 @@
         </li>
         {{/each}}
     </ul>
+    <script>
+        const backdrop = "{{@backdrop}}"
+        // 背景api
+        if (backdrop) {
+            var container = document.getElementById('container')
+            container.style.backgroundImage = 'url(' + backdrop + ')'
+        }
+    </script>
 </div>
 
 {{if HardDisk}}
@@ -66,12 +74,6 @@
         const chart = echarts.init(document.getElementById('Chart'), 'westeros', {
             renderer: 'svg'
         })
-        const backdrop = chartData.backdrop
-        // 背景api
-        if (backdrop) {
-            var container = document.getElementById('container')
-            container.style.backgroundImage = 'url(' + backdrop + ')'
-        }
         const by = (value) => {
             value = value?.value ?? value
             let units = ['B', 'KB', 'MB', 'GB', 'TB'] // 定义单位数组
@@ -163,7 +165,7 @@
         }
         option.legend.data = option.series
             .filter(item => item.data.length !== 0)
-            .map(item => item.name);
+            .map(item => item.name)
         chart.setOption(option)
     </script>
 </div>

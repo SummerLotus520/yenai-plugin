@@ -806,6 +806,12 @@ export class Assistant extends plugin {
     if (!(this.e.isMaster)) return true
     let user_id = this.e.at || this.e.msg.replace(/#|[\u4e00-\u9fa5]/g, "").trim()
     user_id = Number(user_id) || String(user_id)
+    
+    /** 如果当前是群，并且没有键入群id，默认为当前群 */
+    if (!user_id && this.e.msg.includes("群")) {
+      user_id = Number(this.e.group_id) || String(this.e.group_id)
+    }
+
     if (!user_id) return await this.e.reply(`❎ 拉黑失败，没有键入用户ID或群号`)
 
     if (this.e.msg.includes("群")) {

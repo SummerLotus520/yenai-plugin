@@ -13,9 +13,9 @@ export function supportGuoba () {
     pluginInfo: {
       name: 'yenai-plugin',
       title: 'Yenai-Plugin',
-      author: '@椰羊',
-      authorLink: 'https://gitee.com/yeyang52',
-      link: 'https://gitee.com/yeyang52/yenai-plugin',
+      author: '@椰羊&@Lain.',
+      authorLink: 'https://gitee.com/Zyy955',
+      link: 'https://gitee.com/Zyy955/yenai-plugin',
       isV3: true,
       isV2: false,
       description: '提供对Bot的一些便捷操作',

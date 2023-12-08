@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import fs from "fs"
 import { createRequire } from 'module'
 import moment from 'moment'
 import os from 'os'
@@ -60,8 +61,7 @@ export class NewState extends plugin {
 
     // 网络测试
     let psTest = []
-    let { psTestSites, psTestTimeout, backdrop } = Config.state
-    State.chartData.backdrop = backdrop
+    let { psTestSites, psTestTimeout, backdrop, YZAvatar } = Config.state
     psTestSites && promiseTaskList.push(...psTestSites?.map(i => State.getNetworkLatency(i.url, psTestTimeout).then(res => psTest.push({
       first: i.name,
       tail: res
@@ -107,26 +107,24 @@ export class NewState extends plugin {
 
     /** 本体 */
     if (e.msg.includes("pro")) {
+      const miao = JSON.parse(fs.readFileSync("./plugins/miao-plugin/package.json", "utf-8"))
       BotStatus += `<div class="box">
       <div class="tb">
           <div class="avatar">
-              <img src="${defaultAvatar}"
+              <img src="${YZAvatar || defaultAvatar}"
                   onerror="this.src= '${defaultAvatar}'; this.onerror = null;">
           </div>
           <div class="header">
               <h1>${BotName}</h1>
               <hr noshade>
-              <p>在线(${BotName} ${Version.yunzai})</p>
               <p>适配器连接数量：${BotList.length}</p>
               <p>${await this.getCount()}</p>
-              <p>${BotName} 已运行 ${common.formatTime(Date.now() / 1000 - Bot.stat?.start_time, 'dd天hh小时mm分', false)} | 系统运行 ${systime}</p>
-              <p>${calendar} | Nodejs ${nodeVersion} | ${Version.yunzai}</p>
+              <p>Miao-Yunzai当前版本：${Version.yunzai}</p>
+              <p>Miao-Plugin当前版本：v${miao.version}</p>
           </div>
       </div>
   </div>
-  `
-   
-}
+  `}
 
     for (const i of BotList) {
       const bot = Bot[i]
@@ -173,6 +171,7 @@ export class NewState extends plugin {
     }
     // 渲染数据
     let data = {
+      backdrop,
       BotStatus,
       chartData: JSON.stringify(common.checkIfEmpty(State.chartData, ['echarts_theme', 'cpu', 'ram']) ? undefined : State.chartData),
       // 硬盘内存
