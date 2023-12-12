@@ -61,7 +61,13 @@ export default class {
    * @returns {Promise<void>} - 由所有解禁操作的 Promise 对象组成的数组
    */
   async releaseAllMute () {
-    let mutelist = await this.getMuteList(this.e.group_id)
+    let mutelist
+    if (this.e?.adapter === 'shamrock') {
+      mutelist = await this.e.bot.getMuteList(this.e.group_id)
+    } else {
+      mutelist = await this.getMuteList(this.e.group_id)
+    }
+
     for (let i of mutelist) {
       this.e.group.muteMember(i.user_id, 0)
     }
@@ -203,7 +209,7 @@ export default class {
         msg.push(`错误：${JSON.stringify(res)}`)
       } else {
         msg.push('成功清理如下人员\n' + i.ul.map((item, index) =>
-      `${index + 1}、${item}`
+          `${index + 1}、${item}`
         ).join('\n'))
       }
     })
@@ -225,7 +231,7 @@ export default class {
     let msg = list.slice(0, num)
     msg = msg.map((item, index) => {
       return [`第${index + 1}名：\n`,
-        segment.image(`https://q1.qlogo.cn/g?b=qq&s=100&nk=${item.user_id}`),
+      segment.image(`https://q1.qlogo.cn/g?b=qq&s=100&nk=${item.user_id}`),
       `\nQQ：${item.user_id}\n`,
       `昵称：${item.card || item.nickname}\n`,
       `最后发言时间：${moment(item.last_sent_time * 1000).format('YYYY-MM-DD HH:mm:ss')}`
