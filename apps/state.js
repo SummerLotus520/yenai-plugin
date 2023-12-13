@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import fs from "fs"
+import fs from 'fs'
 import { createRequire } from 'module'
 import moment from 'moment'
 import os from 'os'
@@ -11,7 +11,7 @@ const require = createRequire(import.meta.url)
 
 let interval = false
 export class NewState extends plugin {
-  constructor() {
+  constructor () {
     super({
       name: '椰奶状态',
       event: 'message',
@@ -26,7 +26,7 @@ export class NewState extends plugin {
     })
   }
 
-  async state(e) {
+  async state (e) {
     if (e.msg.includes('监控')) {
       return await puppeteer.render('state/monitor', {
         chartData: JSON.stringify(State.chartData)
@@ -92,22 +92,22 @@ export class NewState extends plugin {
     const calendar = moment().format('YYYY-MM-DD HH:mm:ss')
     // nodejs版本
     const nodeVersion = process.version
-    let BotStatus = ""
+    let BotStatus = ''
 
     /** bot列表 */
     let BotList = [e.self_id]
     /** TRSS */
-    if (e.msg.includes("pro") && Array.isArray(Bot?.uin)) {
+    if (e.msg.includes('pro') && Array.isArray(Bot?.uin)) {
       BotList = Bot.uin
     }
     /** ws-plugin、Lain-plugin多bot */
-    else if (e.msg.includes("pro") && !Array.isArray(Bot?.uin) && Bot?.adapter && Bot?.adapter.includes(e.self_id)) {
+    else if (e.msg.includes('pro') && !Array.isArray(Bot?.uin) && Bot?.adapter && Bot?.adapter.includes(e.self_id)) {
       BotList = Bot.adapter
     }
 
     /** 本体 */
-    if (e.msg.includes("pro")) {
-      const miao = JSON.parse(fs.readFileSync("./plugins/miao-plugin/package.json", "utf-8"))
+    if (e.msg.includes('pro')) {
+      const miao = JSON.parse(fs.readFileSync('./plugins/miao-plugin/package.json', 'utf-8'))
       BotStatus += `<div class="box">
       <div class="tb">
           <div class="avatar">
@@ -124,7 +124,8 @@ export class NewState extends plugin {
           </div>
       </div>
   </div>
-  `}
+  `
+    }
 
     for (const i of BotList) {
       const bot = Bot[i]
@@ -132,13 +133,13 @@ export class NewState extends plugin {
       // 头像
       const avatar = bot.avatar || (Number(bot.uin) ? `https://q1.qlogo.cn/g?b=qq&s=0&nk=${bot.uin}` : defaultAvatar)
       // 昵称
-      const nickname = bot.nickname || "未知"
+      const nickname = bot.nickname || '未知'
       // 在线状态
-      const onlineStatus = status[bot.status] || "在线"
+      const onlineStatus = status[bot.status] || '在线'
       // 登录平台版本
-      const platform = bot.apk ? `${bot.apk.display} v${bot.apk.version}` : bot.version.version || "未知"
+      const platform = bot.apk ? `${bot.apk.display} v${bot.apk.version}` : bot.version.version || '未知'
       // 收
-      const recv = bot.stat?.recv_msg_cnt || 0
+      const recv = await bot?.readMsg?.() || bot.stat?.recv_msg_cnt || 0
       // 好友数
       const friendQuantity = Array.from(bot.fl.values()).length
       // 群数
@@ -149,7 +150,7 @@ export class NewState extends plugin {
       // 运行时间
       const runTime = common.formatTime(Date.now() / 1000 - bot.stat?.start_time, 'dd天hh小时mm分', false)
       // Bot版本
-      const botVersion = bot.version ? `${bot.version.name}(${bot.version.id})${bot.apk ? ` ${bot.version.version}` : ""}` : `ICQQ(QQ) v${require('icqq/package.json').version}`
+      const botVersion = bot.version ? `${bot.version.name}(${bot.version.id})${bot.apk ? ` ${bot.version.version}` : ''}` : `ICQQ(QQ) v${require('icqq/package.json').version}`
       BotStatus += `<div class="box">
     <div class="tb">
         <div class="avatar">
@@ -160,7 +161,7 @@ export class NewState extends plugin {
             <h1>${nickname}</h1>
             <hr noshade>
             <p>${onlineStatus}(${platform}) | 收${recv} | 发${sent} | 图片${screenshot} | 好友${friendQuantity} |
-                群${groupQuantity}${guildsQuantity ? ` | 频道${guildsQuantity}` : ""}
+                群${groupQuantity}${guildsQuantity ? ` | 频道${guildsQuantity}` : ''}
             </p>
             <p>${BotName} 已运行 ${runTime} | 系统运行 ${systime}</p>
             <p>${calendar} | Nodejs ${nodeVersion} | ${botVersion}</p>
@@ -198,7 +199,7 @@ export class NewState extends plugin {
     interval = false
   }
 
-  async getCount() {
+  async getCount () {
     const date = moment().format('MMDD')
     const month = Number(moment().month()) + 1
     const key = 'Yz:count:'
@@ -240,7 +241,6 @@ export class NewState extends plugin {
     msg.push(`本周：发${count.week.msg} | 图片${count.week.screenshot}`)
     msg.push(`本月：发${count.month.msg} | 图片${count.month.screenshot}`)
 
-    return msg.join("<br>")
+    return msg.join('<br>')
   }
-
 }
