@@ -147,6 +147,15 @@ export class NewState extends plugin {
       // 频道
       let guildsQuantity
       try { guildsQuantity = Array.from(bot.guilds.values()).length } catch { }
+
+      /** 仅适配铃音，TRSS不变 */
+      let textMsg
+      let imageMsg
+      try {
+        textMsg = await bot?.MsgTotal?.('text')
+        imageMsg = await bot?.MsgTotal?.('image')
+      } catch { }
+
       // 运行时间
       const runTime = common.formatTime(Date.now() / 1000 - bot.stat?.start_time, 'dd天hh小时mm分', false)
       // Bot版本
@@ -160,7 +169,7 @@ export class NewState extends plugin {
         <div class="header">
             <h1>${nickname}</h1>
             <hr noshade>
-            <p>${onlineStatus}(${platform}) | 收${recv} | 发${sent} | 图片${screenshot} | 好友${friendQuantity} |
+            <p>${onlineStatus}(${platform}) | 收${recv} | 发${textMsg || sent} | 图片${imageMsg || screenshot} | 好友${friendQuantity} |
                 群${groupQuantity}${guildsQuantity ? ` | 频道${guildsQuantity}` : ''}
             </p>
             <p>${BotName} 已运行 ${runTime} | 系统运行 ${systime}</p>
