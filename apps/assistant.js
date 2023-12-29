@@ -210,7 +210,7 @@ export class Assistant extends plugin {
 
       if (!group) return e.reply('❎ 群号不能为空')
 
-      if (!this.Bot.gl.get(Number(msg[1]))) return e.reply('❎ 群聊列表查无此群')
+      if (!this.Bot.gl.get(Number(msg[1]) || String(msg[1]))) return e.reply('❎ 群聊列表查无此群')
     } else {
       group = e.group_id
       card = e.msg.replace(/#|改群名片/g, '').trim()
@@ -237,8 +237,8 @@ export class Assistant extends plugin {
 
       if (!(/^\d+$/.test(e.group_id))) return e.reply('❎ 您的群号不合法')
 
-      if (!this.Bot.gl.get(Number(e.group_id))) return e.reply('❎ 群聊列表查无此群')
-      e.group_id = Number(e.group_id)
+      if (!this.Bot.gl.get(Number(e.group_id) || String(e.group_id))) return e.reply('❎ 群聊列表查无此群')
+      e.group_id = Number(e.group_id) || String(e.group_id)
     } else if (!e.member.is_admin && !e.member.is_owner && !e.isMaster) {
       return logger.mark(`${e.logFnc}该群员权限不足`)
     }
@@ -296,7 +296,7 @@ export class Assistant extends plugin {
       card = msg.slice(2).join(' ')
 
       if (!group) return e.reply('❎ 群号不能为空')
-      if (!this.Bot.gl.get(Number(msg[1]))) return e.reply('❎ 群聊列表查无此群')
+      if (!this.Bot.gl.get(Number(msg[1]) || String(msg[1]))) return e.reply('❎ 群聊列表查无此群')
     } else {
       if (!e.member.is_admin && !e.member.is_owner && !e.isMaster) return logger.mark(`${e.logFnc}该群员权限不足`)
       group = e.group_id
@@ -305,7 +305,7 @@ export class Assistant extends plugin {
 
     if (!card) return e.reply('❎ 昵称不能为空')
 
-    group = Number(group)
+    group = Number(group) || String(group)
 
     if (this.Bot.pickGroup(group).is_admin || this.Bot.pickGroup(group).is_owner) {
       this.Bot.pickGroup(group).setName(card)
@@ -358,7 +358,7 @@ export class Assistant extends plugin {
     e.message[0].text = regRet[2]
     if (!/^\d+$/.test(qq)) return e.reply('❎ QQ号不正确，人家做不到的啦>_<~')
 
-    if (!this.Bot.fl.get(Number(qq))) return e.reply('❎ 好友列表查无此人')
+    if (!this.Bot.fl.get(Number(qq) || String(qq))) return e.reply('❎ 好友列表查无此人')
 
     if (!e.message[0].text) e.message.shift()
 
@@ -384,7 +384,7 @@ export class Assistant extends plugin {
 
     if (!/^\d+$/.test(gpid)) return e.reply('❎ 您输入的群号不合法')
 
-    if (!this.Bot.gl.get(Number(gpid))) return e.reply('❎ 群聊列表查无此群')
+    if (!this.Bot.gl.get(Number(gpid) || String(gpid))) return e.reply('❎ 群聊列表查无此群')
 
     await this.Bot.pickGroup(gpid).sendMsg(e.message)
       .then(() => e.reply('✅ 群聊消息已送达'))
@@ -451,7 +451,7 @@ export class Assistant extends plugin {
 
     if (!/^\d+$/.test(quits)) return e.reply('❎ 群号不合法')
 
-    if (!this.Bot.gl.get(Number(quits))) return e.reply('❎ 群聊列表查无此群')
+    if (!this.Bot.gl.get(Number(quits) || String(quits))) return e.reply('❎ 群聊列表查无此群')
 
     await this.Bot.pickGroup(quits).quit()
       .then(() => e.reply('✅ 已退出群聊'))

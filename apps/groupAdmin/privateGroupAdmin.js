@@ -32,7 +32,7 @@ export class PrivateGroupAdmin extends plugin {
   }
 
   async muteMember (e) {
-   if (!(this.e.isMaster)) return true 
+    if (!(this.e.isMaster)) return true
     let regRet = e.msg.match(muteMemberReg)
     const time = common.translateChinaNum(regRet[3])
     let res = await new Ga(e).muteMember(regRet[1], regRet[2], e.user_id, time, regRet[4])
@@ -40,22 +40,22 @@ export class PrivateGroupAdmin extends plugin {
   }
 
   async noMuteMember (e) {
-   if (!(this.e.isMaster)) return true 
+    if (!(this.e.isMaster)) return true
     let regRet = e.msg.match(/^#解禁\s?(\d+)\s(\d+)$/)
     let res = await new Ga(e).muteMember(regRet[1], regRet[2], e.user_id, 0)
     e.reply(res)
   }
 
   async muteAll (e) {
-   if (!(this.e.isMaster)) return true 
+    if (!(this.e.isMaster)) return true
     let regRet = e.msg.match(/全体(禁言|解禁)(\d+)/)
-    let group = (e.bot ?? Bot).pickGroup(Number(regRet[2]))
+    let group = (e.bot ?? Bot).pickGroup(Number(regRet[2]) || String(regRet[2]))
     group.muteAll(regRet[1] == '禁言')
     e.reply(`✅ 已将群「${group.name}(${group.group_id})」${regRet[1] == '禁言' ? '开启' : '解除'}全体禁言`)
   }
 
   async kickMember (e) {
-   if (!(this.e.isMaster)) return true 
+    if (!(this.e.isMaster)) return true
     let regRet = e.msg.match(/#踢\s?(\d+)\s(\d+)$/)
     let res = await Ga.kickMember(regRet[1], regRet[2], e.user_id)
     e.reply(res)

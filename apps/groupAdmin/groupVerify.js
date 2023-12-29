@@ -49,7 +49,7 @@ export class NewGroupVerify extends plugin {
     if (qq == '从未发言的人') return this.cmdReverifyNeverSpeak(e)
 
     if (!(/\d{5,}/.test(qq))) return e.reply('❎ 请输入正确的QQ号')
-    qq = Number(qq)
+    qq = Number(qq) || String(qq)
     if (qq == (e.bot ?? Bot).uin) return
 
     if (Config.masterQQ.includes(qq)) return e.reply('❎ 该命令对机器人管理员无效')
@@ -71,7 +71,7 @@ export class NewGroupVerify extends plugin {
     if (!(/\d{5,}/.test(qq))) return e.reply('❎ 请输入正确的QQ号')
 
     if (qq == (e.bot ?? Bot).uin) return
-    qq = Number(qq)
+    qq = Number(qq) || String(qq)
     if (!temp[qq + e.group_id]) return e.reply('❎ 目标群成员当前无需验证')
 
     clearTimeout(temp[qq + e.group_id].kickTimer)
@@ -203,8 +203,8 @@ Bot.on?.('notice.group.decrease', async (e) => {
 // 发送验证信息
 async function verify (user_id, group_id, e) {
   if (!e.group.is_admin && !e.group.is_owner) return
-  user_id = Number(user_id)
-  group_id = Number(group_id)
+  user_id = Number(user_id) || String(user_id)
+  group_id = Number(group_id) || String(group_id)
   logger.mark(`[Yenai-Plugin][进群验证]进行${user_id}的验证`)
 
   const { times, range, time, remindAtLastMinute } = Config.groupverify

@@ -57,7 +57,7 @@ export class NewHandle extends plugin {
     const systemMsg = (await (e.bot ?? Bot).getSystemMsg());
     const FriendAdd = systemMsg.filter(
       item => item.request_type == 'friend' &&
-      (item.sub_type === 'add' || item.sub_type === 'single')
+        (item.sub_type === 'add' || item.sub_type === 'single')
     );
 
     if (_.isEmpty(FriendAdd)) return e.reply('暂无好友申请(。-ω-)zzz', true)
@@ -157,7 +157,7 @@ export class NewHandle extends plugin {
       if (!e.isMaster) return false
       if (/添加好友申请/.test(sourceMsg[0])) {
         let qq = sourceMsg[1].match(/[1-9]\d*/g)
-        if ((e.bot ?? Bot).fl.get(Number(qq))) return e.reply('❎ 已经同意过该申请了哦~')
+        if ((e.bot ?? Bot).fl.get(Number(qq) || String(qq))) return e.reply('❎ 已经同意过该申请了哦~')
 
         logger.mark(`${e.logFnc}${yes ? '同意' : '拒绝'}好友申请`)
 
@@ -167,7 +167,7 @@ export class NewHandle extends plugin {
           .catch(() => e.reply('❎ 请检查是否已同意该申请'))
       } else if (/邀请机器人进群/.test(sourceMsg[0])) {
         let groupid = sourceMsg[1].match(/[1-9]\d*/g)
-        if ((e.bot ?? Bot).fl.get(Number(groupid))) { return e.reply('❎ 已经同意过该申请了哦~') }
+        if ((e.bot ?? Bot).fl.get(Number(groupid) || String(groupid))) { return e.reply('❎ 已经同意过该申请了哦~') }
 
         let qq = sourceMsg[3].match(/[1-9]\d*/g)
         let seq = sourceMsg[6].match(/[1-9]\d*/g)
@@ -243,7 +243,7 @@ export class NewHandle extends plugin {
 
     if (!/^\d+$/.test(qq)) return e.reply('❎ QQ号不正确，人家做不到的啦>_<~')
 
-    if (!(e.bot ?? Bot).fl.get(Number(qq))) return e.reply('❎ 好友列表查无此人')
+    if (!(e.bot ?? Bot).fl.get(Number(qq) || String(qq))) return e.reply('❎ 好友列表查无此人')
 
     logger.mark(`${e.logFnc}回复好友消息`);
 
@@ -262,8 +262,8 @@ export class NewHandle extends plugin {
     if (!/临时消息/.test(msg[0]) || !/来源群号/.test(msg[1]) || !/发送人QQ/.test(msg[2])) return false
     let group = msg[1].match(/\d+/g)
     let qq = msg[2].match(/\d+/g)
-    if ((e.bot ?? Bot).fl.get(Number(qq))) return e.reply('❎ 已经有这个人的好友了哦~')
-    if (!(e.bot ?? Bot).gl.get(Number(group))) { return e.reply('❎ 群聊列表查无此群') }
+    if ((e.bot ?? Bot).fl.get(Number(qq) || String(qq))) return e.reply('❎ 已经有这个人的好友了哦~')
+    if (!(e.bot ?? Bot).gl.get(Number(group) || String(group))) { return e.reply('❎ 群聊列表查无此群') }
     logger.mark(`${e.logFnc}主动添加好友`);
 
     (e.bot ?? Bot).addFriend(group, qq)

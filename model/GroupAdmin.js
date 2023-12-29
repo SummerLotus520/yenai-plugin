@@ -281,7 +281,7 @@ export default class {
       cron,
       name,
       fnc: () => {
-        this.Bot.pickGroup(Number(group)).muteAll(type)
+        this.Bot.pickGroup(Number(group) || String(group)).muteAll(type)
       }
     }
     loader.task.push(_.cloneDeep(task))
@@ -301,7 +301,7 @@ export default class {
         cron: item.cron,
         name: `椰奶群定时${item.type ? '禁言' : '解禁'}${item.group}`,
         fnc: () => {
-          (Bot[item.botId] ?? Bot).pickGroup(Number(item.group)).muteAll(item.type)
+          (Bot[item.botId] ?? Bot).pickGroup(Number(item.group) || String(item.group)).muteAll(item.type)
         }
       }
     })
@@ -362,21 +362,21 @@ export default class {
    */
   async muteMember (groupId, userId, executor, time = 300, unit = '秒') {
     unit = Time_unit[unit.toUpperCase()] ?? (/^\d+$/.test(unit) ? unit : 60)
-    let group = this.Bot.pickGroup(Number(groupId), true)
+    let group = this.Bot.pickGroup(Number(groupId) || String(groupId), true)
     // 判断是否有管理
     if (!group.is_admin && !group.is_owner) throw Error(ROLE_ERROR)
     if (!(/\d{5,}/.test(userId))) throw Error('❎ 请输入正确的QQ号')
     // 判断是否为主人
-    if (Config.masterQQ?.includes(Number(userId)) && time != 0) throw Error('居然调戏主人！！！哼，坏蛋(ﾉ｀⊿´)ﾉ')
+    if (Config.masterQQ?.includes(Number(userId) || String(userId)) && time != 0) throw Error('居然调戏主人！！！哼，坏蛋(ﾉ｀⊿´)ﾉ')
 
-    let Memberinfo = group.pickMember(Number(userId)).info
+    let Memberinfo = group.pickMember(Number(userId) || String(userId)).info
     // 判断是否有这个人
     if (!Memberinfo) throw Error('❎ 这个群没有这个人哦~')
 
     // 特殊处理
     if (Memberinfo.role === 'owner') throw Error('调戏群主拖出去枪毙5分钟(。>︿<)_θ')
 
-    let user = group.pickMember(Number(executor))
+    let user = group.pickMember(Number(executor) || String(executor))
     let isMaster = Config.masterQQ?.includes(executor)
 
     if (Memberinfo.role === 'admin') {
@@ -397,24 +397,24 @@ export default class {
    */
   async kickMember (groupId, userId, executor) {
     let group = null
-    group = this.Bot.pickGroup(Number(groupId), true)
+    group = this.Bot.pickGroup(Number(groupId) || String(groupId), true)
 
     if (!userId || !(/^\d+$/.test(userId))) throw Error('❎ 请输入正确的QQ号')
     if (!groupId || !(/^\d+$/.test(groupId))) throw Error('❎ 请输入正确的群号')
     // 判断是否为主人
-    if (Config.masterQQ?.includes(Number(userId))) throw Error('居然调戏主人！！！哼，坏蛋(ﾉ｀⊿´)ﾉ')
+    if (Config.masterQQ?.includes(Number(userId) || String(userId))) throw Error('居然调戏主人！！！哼，坏蛋(ﾉ｀⊿´)ﾉ')
 
-    let Memberinfo = group?.pickMember(Number(userId)).info
+    let Memberinfo = group?.pickMember(Number(userId) || String(userId)).info
     // 判断是否有这个人
     if (!Memberinfo) throw Error('❎ 这个群没有这个人哦~')
     if (Memberinfo.role === 'owner') throw Error('调戏群主拖出去枪毙5分钟(。>︿<)_θ')
     let isMaster = Config.masterQQ?.includes(executor)
-    let user = group.pickMember(Number(executor))
+    let user = group.pickMember(Number(executor) || String(executor))
     if (Memberinfo.role === 'admin') {
       if (!group.is_owner) throw Error('人家又不是群主这种事做不到的辣！')
       if (!isMaster && !user.is_owner) throw Error('这个淫系管理员辣，只有主淫和群主才可以干ta')
     }
-    let res = await group.kickMember(Number(userId))
+    let res = await group.kickMember(Number(userId) || String(userId))
     if (!res) throw Error('额...踢出失败哩，可能这个淫比较腻害>_<')
     return '已把这个坏淫踢掉惹！！！'
   }
