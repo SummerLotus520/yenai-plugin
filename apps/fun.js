@@ -135,9 +135,6 @@ export class Fun extends plugin {
     } else {
       this.do = '赞'
     }
-    if ((e.bot ?? Bot).config?.platform == 3) {
-      return logger.error(`${e.logFnc}手表协议暂不支持点赞请更换协议后重试`)
-    }
     /** 判断是赞自己还是赞别人 */
     if (e.at && e.msg.includes('他', '她', '它')) {
       /** 判断是否为好友 */
