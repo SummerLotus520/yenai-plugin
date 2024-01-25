@@ -119,8 +119,6 @@ export class NewState extends plugin {
               <hr noshade>
               <p>适配器连接数量：${BotList.length}</p>
               <p>${await this.getCount()}</p>
-              <p>${BotName}当前版本：${Version.yunzai}</p>
-              <p>Miao-Plugin当前版本：v${miao.version}</p>
           </div>
       </div>
   </div>
