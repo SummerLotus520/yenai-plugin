@@ -1,5 +1,4 @@
 import _ from 'lodash'
-import fs from 'fs'
 import { createRequire } from 'module'
 import moment from 'moment'
 import os from 'os'
@@ -80,10 +79,6 @@ export class NewState extends plugin {
       State.getNodeInfo()
     ]))
     const defaultAvatar = `../../../../../plugins/${Plugin_Name}/resources/state/img/default_avatar.jpg`
-    // 发
-    const sent = await redis.get('Yz:count:sendMsg:total') || 0
-    // 图片
-    const screenshot = await redis.get('Yz:count:screenshot:total') || 0
     // 机器人名称
     const BotName = Version.name
     // 系统运行时间
@@ -107,7 +102,6 @@ export class NewState extends plugin {
 
     /** 本体 */
     if (e.msg.includes('pro')) {
-      const miao = JSON.parse(fs.readFileSync('./plugins/miao-plugin/package.json', 'utf-8'))
       BotStatus += `<div class="box">
       <div class="tb">
           <div class="avatar">
@@ -136,8 +130,12 @@ export class NewState extends plugin {
       const onlineStatus = status[bot.status] || '在线'
       // 登录平台版本
       const platform = bot.apk ? `${bot.apk.display} v${bot.apk.version}` : bot.version.version || '未知'
+      // 发
+      const sent = await redis.get(`Yz:count:send:msg:bot:${bot.uin}:total`) || await redis.get('Yz:count:sendMsg:total') || 0
       // 收
-      const recv = await bot?.readMsg?.() || bot.stat?.recv_msg_cnt || 0
+      const recv = await redis.get(`Yz:count:receive:msg:bot:${bot.uin}:total`) || await bot?.readMsg?.() || bot.stat?.recv_msg_cnt || 0
+      // 图片
+      const screenshot = await redis.get(`Yz:count:send:image:bot:${bot.uin}:total`) || await redis.get('Yz:count:screenshot:total') || 0
       // 好友数
       const friendQuantity = Array.from(bot.fl.values()).length
       // 群数
@@ -207,7 +205,6 @@ export class NewState extends plugin {
   }
 
   async getCount () {
-    const date = moment().format('MMDD')
     const month = Number(moment().month()) + 1
     const key = 'Yz:count:'
     const msgKey = {
