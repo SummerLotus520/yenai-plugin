@@ -458,7 +458,7 @@ export default class {
       }
     }
 
-    let core = this.Bot.core
+    let core = this.Bot.icqq?.core
     if (!core) {
       try {
         core = (await import('icqq')).core
