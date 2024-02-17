@@ -85,8 +85,6 @@ export class NewState extends plugin {
     const systime = common.formatTime(os.uptime(), 'dd天hh小时mm分', false)
     // 日历
     const calendar = moment().format('YYYY-MM-DD HH:mm:ss')
-    // nodejs版本
-    const nodeVersion = process.version
     let BotStatus = ''
 
     /** bot列表 */
@@ -94,9 +92,8 @@ export class NewState extends plugin {
     /** TRSS */
     if (e.msg.includes('pro') && Array.isArray(Bot?.uin)) {
       BotList = Bot.uin
-    }
-    /** ws-plugin、Lain-plugin多bot */
-    else if (e.msg.includes('pro') && !Array.isArray(Bot?.uin) && Bot?.adapter && Bot?.adapter.includes(e.self_id)) {
+    } else if (e.msg.includes('pro') && !Array.isArray(Bot?.uin) && Bot?.adapter && Bot?.adapter.includes(e.self_id)) {
+      /** ws-plugin、Lain-plugin多bot */
       BotList = Bot.adapter
     }
 
@@ -137,9 +134,12 @@ export class NewState extends plugin {
       // 图片
       const screenshot = await redis.get(`Yz:count:send:image:bot:${bot.uin}:total`) || await redis.get('Yz:count:screenshot:total') || 0
       // 好友数
-      const friendQuantity = Array.from(bot.fl.values()).length
+      const friendQuantity = Array.from(bot.fl?.keys()).length
       // 群数
-      const groupQuantity = Array.from(bot.gl.values()).length
+      const groupQuantity = Array.from(bot.gl?.keys()).length
+      // 群员数
+      let groupMemberQuantity = 0
+      for (const i of bot.gml?.values() || []) groupMemberQuantity += Array.from(i.keys()).length
       // 频道
       let guildsQuantity
       try { guildsQuantity = Array.from(bot.guilds.values()).length } catch { }
@@ -165,11 +165,10 @@ export class NewState extends plugin {
         <div class="header">
             <h1>${nickname}</h1>
             <hr noshade>
-            <p>${onlineStatus}(${platform}) | 收${recv} | 发${textMsg || sent} | 图片${imageMsg || screenshot} | 好友${friendQuantity} |
-                群${groupQuantity}${guildsQuantity ? ` | 频道${guildsQuantity}` : ''}
-            </p>
+            <p>${onlineStatus}(${platform}) | 收${recv} | 发${textMsg || sent} | 图片${imageMsg || screenshot}</p>
+            <p>好友数：${friendQuantity} | 群数：${groupQuantity} | 群员数：${groupMemberQuantity} | 频道数：${guildsQuantity || 0} | ${process.platform}(${process.arch})</p>
             <p>${BotName} 已运行 ${runTime} | 系统运行 ${systime}</p>
-            <p>${calendar} | Nodejs ${nodeVersion} | ${botVersion}</p>
+            <p>${calendar} | Node.js ${process.version} | ${botVersion} </p>
         </div>
     </div>
 </div>
