@@ -429,18 +429,24 @@ export default class {
   async thumbUp (uid, times = 1) {
     /** Chronocat点赞 */
     if (this.Bot?.sendLike && this.e.adapter?.red) return this.Bot.sendLike(uid, times)
-    /** LagrangeCore点赞 */
-    if (this.e?.adapter && this.e?.adapter == ' LagrangeCore') return this.Bot.sendLike(uid, times)
-    /** Shamrock点赞 */
-    if (this.e?.adapter && this.e?.adapter == 'shamrock') {
+    /** Shamrock、LagrangeCore点赞 */
+    if (this.e?.adapter && (this.e.adapter === 'shamrock' || this.e.adapter === 'LagrangeCore')) {
       // 劫持为shamrock点赞
       let target = (this.e.at && this.e.msg.includes('他', '她', '它', 'TA', 'ta', 'Ta')) ? this.e.at : this.e.user_id
       let lock = await redis.get(`lain:thumbup:${this.e.self_id}_${target}`)
 
       // shamrock不管点没点上一律返回ok。。只好自己伪造了，不然椰奶会死循环，暂不考虑svip的情况。
       try {
-        const Api = (await import('../../../Lain-plugin/adapter/shamrock/api.js')).default
-        await Api.send_like(this.e.self_id, uid, times)
+        const type = (this.e.adapter === 'shamrock') ? 'shamrock' : 'LagrangeCore'
+        const Api = (await import(`../../../Lain-plugin/adapter/${type}/api.js`)).default
+        /** 拉格朗需要发10次 */
+        if (type === 'LagrangeCore') {
+          for (let i = 0; i < 10; i++) {
+            await Api.send_like(this.e.self_id, uid, 1)
+          }
+        } else {
+          await Api.send_like(this.e.self_id, uid, times)
+        }
       } catch (err) {
         logger.error(err)
         return { code: 1, msg: 'Shamrock点赞失败，请查看日志' }
