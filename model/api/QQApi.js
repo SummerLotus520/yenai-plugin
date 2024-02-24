@@ -429,6 +429,8 @@ export default class {
   async thumbUp (uid, times = 1) {
     /** Chronocat点赞 */
     if (this.Bot?.sendLike && this.e.adapter?.red) return this.Bot.sendLike(uid, times)
+    /** LagrangeCore点赞 */
+    if (this.e?.adapter && this.e?.adapter == ' LagrangeCore') return this.Bot.sendLike(uid, times)
     /** Shamrock点赞 */
     if (this.e?.adapter && this.e?.adapter == 'shamrock') {
       // 劫持为shamrock点赞

@@ -1,11 +1,9 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import { common, QQApi } from '../model/index.js'
-import { Version, YamlReader } from '../components/index.js'
+import { YamlReader } from '../components/index.js'
 import _ from 'lodash'
 import moment from 'moment'
 import { status } from '../constants/other.js'
-import yaml from 'yaml'
-import fs from 'node:fs'
 
 /** API请求错误文案 */
 const API_ERROR = '❎ 出错辣，请稍后重试'
@@ -728,16 +726,12 @@ export class Assistant extends plugin {
     }
     let target = e.isGroup ? e.group : e.friend
 
-    if (source.sender.user_id != this.Bot.uin) {
-      if (e.isGroup) {
-        // 群聊判断权限
-        if (!e.isMaster && !e.member.is_owner && !e.member.is_admin) {
-          return logger.warn(`${e.logFnc}该群员权限不足`)
-        }
-      } else {
-        // 私聊判断是否为Bot消息
-        return logger.warn(`${e.logFnc}引用不是Bot消息`)
-      }
+    if (e.isGroup) {
+      // 群聊判断权限
+      if (!e.isMaster && !e.member.is_owner && !e.member.is_admin) return logger.warn(`${e.logFnc}该群员权限不足`)
+    } else {
+      // 私聊判断是否为Bot消息
+      if (source.sender.user_id != this.Bot.uin) return logger.warn(`${e.logFnc}引用不是Bot消息`)
     }
     if (source.message[0].type === 'file' && e.isGroup) {
       // 删除文件

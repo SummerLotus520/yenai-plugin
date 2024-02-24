@@ -5,7 +5,8 @@
 
 # Yenai-Plugin
 
-本仓库是[Yenai-Plugin](https://github.com/yeyang52/yenai-plugin)的下游仓库，适配[Lain-plugin](https://github.com/Zyy955/Lain-plugin)的三叶草`Shamrock`适配器~
+源仓库：[Yenai-Plugin](https://github.com/yeyang52/yenai-plugin)  
+本仓库是个人自用版本，不会与上游保持同步。
 
 🐑 **_Yenai-Plugin是一个Yunzai-Bot的扩展插件，提供对Bot的一些便捷操作。_**<img src="https://media.giphy.com/media/mGcNjsfWAjY5AEZNw6/giphy.gif" width="50">
 
@@ -13,28 +14,26 @@
 
 <!-- <img src="https://counter.seku.su/cmoe?name=yenai-plugin&theme=r34" /><br> -->
 
-
-[![deploy_docs](https://github.com/yeyang52/yenai-plugin/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/yeyang52/yenai-plugin/actions/workflows/deploy-docs.yml)
-[![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=yenai-plugin-eta)](https://vercel.com/yeyang52/yenai-plugin)
+[![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=yenai-plugin-eta)](https://vercel.com/Zyy955/yenai-plugin)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/fbae5073-1b4c-4c62-a818-6cc8e100d336/deploy-status)](https://app.netlify.com/sites/yenai-plugin/deploys)
 
 ![Nodejs](https://img.shields.io/badge/-Node.js-3C873A?style=flat&logo=Node.js&logoColor=white) 
 ![JavaScript](https://img.shields.io/badge/-JavaScript-eed718?style=flat&logo=javascript&logoColor=ffffff)
-[![license](https://img.shields.io/github/license/yeyang52/yenai-plugin.svg?style=flat&logo=gnu)](https://github.com/yeyang52/yenai-plugin/blob/master/LICENSE) 
+[![license](https://img.shields.io/github/license/Zyy955/yenai-plugin.svg?style=flat&logo=gnu)](https://github.com/Zyy955/yenai-plugin/blob/master/LICENSE) 
 [![YunzaiBot](https://img.shields.io/badge/Yunzai-V3.0.0-black?style=flat&logo=dependabot)](https://gitee.com/Le-niao/Yunzai-Bot) 
 [![Group](https://img.shields.io/badge/Group-254974507-red?style=flat&logo=GroupMe&logoColor=white)](https://jq.qq.com/?_wv=1027&k=o8FTig5Z) 
 
-![GitHub last commit](https://img.shields.io/github/last-commit/yeyang52/yenai-plugin)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/yeyang52/yenai-plugin)
-![Lines of code](https://img.shields.io/tokei/lines/github/yeyang52/yenai-plugin)
-[![GitHub stars](https://img.shields.io/github/stars/yeyang52/yenai-plugin)](https://github.com/yeyang52/yenai-plugin/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/yeyang52/yenai-plugin)](https://github.com/yeyang52/yenai-plugin/network)
-[![GitHub issues](https://img.shields.io/github/issues/yeyang52/yenai-plugin)](https://github.com/yeyang52/yenai-plugin/issues)
+![GitHub last commit](https://img.shields.io/github/last-commit/Zyy955/yenai-plugin)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Zyy955/yenai-plugin)
+![Lines of code](https://img.shields.io/tokei/lines/github/Zyy955/yenai-plugin)
+[![GitHub stars](https://img.shields.io/github/stars/Zyy955/yenai-plugin)](https://github.com/Zyy955/yenai-plugin/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Zyy955/yenai-plugin)](https://github.com/Zyy955/yenai-plugin/network)
+[![GitHub issues](https://img.shields.io/github/issues/Zyy955/yenai-plugin)](https://github.com/Zyy955/yenai-plugin/issues)
 </div>
 
 <div align="center">
 
-[![Star Trend](https://api.star-history.com/svg?repos=yeyang52/yenai-plugin&type=Timeline)](https://seladb.github.io/StarTrack-js/#/preload?r=yeyang52,yenai-plugin)
+[![Star Trend](https://api.star-history.com/svg?repos=Zyy955/yenai-plugin&type=Timeline)](https://seladb.github.io/StarTrack-js/#/preload?r=Zyy955,yenai-plugin)
 
 </div>
 
@@ -237,7 +236,7 @@ Tip：具体可使用 **#椰奶群管帮助** 查看
 ### 贡献者 ✨
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 感谢这些了不起的人 ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
@@ -247,17 +246,19 @@ Tip：具体可使用 **#椰奶群管帮助** 查看
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/TimeRainStarSky"><img src="https://avatars.githubusercontent.com/u/63490117?v=4?s=100" width="100px;" alt="时雨◎星空"/><br /><sub><b>时雨◎星空</b></sub></a><br /><a href="https://github.com/yeyang52/yenai-plugin/commits?author=TimeRainStarSky" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Saury-loser"><img src="https://avatars.githubusercontent.com/u/106982493?v=4?s=100" width="100px;" alt="花海里的秋刀鱼"/><br /><sub><b>花海里的秋刀鱼</b></sub></a><br /><a href="https://github.com/yeyang52/yenai-plugin/commits?author=Saury-loser" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/TimeRainStarSky"><img src="https://avatars.githubusercontent.com/u/63490117?v=4?s=100" width="100px;" alt="时雨◎星空"/><br /><sub><b>时雨◎星空</b></sub></a><br /><a href="https://github.com/Zyy955/yenai-plugin/commits?author=TimeRainStarSky" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Saury-loser"><img src="https://avatars.githubusercontent.com/u/106982493?v=4?s=100" width="100px;" alt="花海里的秋刀鱼"/><br /><sub><b>花海里的秋刀鱼</b></sub></a><br /><a href="https://github.com/Zyy955/yenai-plugin/commits?author=Saury-loser" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Georgebillion"><img src="https://avatars.githubusercontent.com/u/40432824?v=4?s=100" width="100px;" alt="Georgebillion"/><br /><sub><b>Georgebillion</b></sub></a><br /><a href="#ideas-Georgebillion" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/xfdown"><img src="https://avatars.githubusercontent.com/u/42599406?v=4?s=100" width="100px;" alt="小飞"/><br /><sub><b>小飞</b></sub></a><br /><a href="#ideas-xfdown" title="Ideas, Planning, & Feedback">🤔</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/liuzj288"><img src="https://avatars.githubusercontent.com/u/13833404?v=4?s=100" width="100px;" alt="liuzj288"/><br /><sub><b>liuzj288</b></sub></a><br /><a href="https://github.com/yeyang52/yenai-plugin/commits?author=liuzj288" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/OKKOM2020"><img src="https://avatars.githubusercontent.com/u/88592811?v=4?s=100" width="100px;" alt="OKKOM2020"/><br /><sub><b>OKKOM2020</b></sub></a><br /><a href="https://github.com/yeyang52/yenai-plugin/commits?author=OKKOM2020" title="Documentation">📖</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/kmiit"><img src="https://avatars.githubusercontent.com/u/61952405?v=4?s=100" width="100px;" alt="大可鸭"/><br /><sub><b>大可鸭</b></sub></a><br /><a href="https://github.com/yeyang52/yenai-plugin/commits?author=kmiit" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/liuzj288"><img src="https://avatars.githubusercontent.com/u/13833404?v=4?s=100" width="100px;" alt="liuzj288"/><br /><sub><b>liuzj288</b></sub></a><br /><a href="https://github.com/Zyy955/yenai-plugin/commits?author=liuzj288" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/OKKOM2020"><img src="https://avatars.githubusercontent.com/u/88592811?v=4?s=100" width="100px;" alt="OKKOM2020"/><br /><sub><b>OKKOM2020</b></sub></a><br /><a href="https://github.com/Zyy955/yenai-plugin/commits?author=OKKOM2020" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/kmiit"><img src="https://avatars.githubusercontent.com/u/61952405?v=4?s=100" width="100px;" alt="大可鸭"/><br /><sub><b>大可鸭</b></sub></a><br /><a href="https://github.com/Zyy955/yenai-plugin/commits?author=kmiit" title="Code">💻</a></td>
     </tr>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/SmallK111407"><img src="https://avatars.githubusercontent.com/u/108290923?v=4?s=100" width="100px;" alt="SunRyK"/><br /><sub><b>SunRyK</b></sub></a><br /><a href="https://github.com/yeyang52/yenai-plugin/commits?author=SmallK111407" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ikechan8370"><img src="https://avatars.githubusercontent.com/u/21212372?v=4?s=100" width="100px;" alt="ikechan8370"/><br /><sub><b>ikechan8370</b></sub></a><br /><a href="https://github.com/yeyang52/yenai-plugin/commits?author=ikechan8370" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/SmallK111407"><img src="https://avatars.githubusercontent.com/u/108290923?v=4?s=100" width="100px;" alt="SunRyK"/><br /><sub><b>SunRyK</b></sub></a><br /><a href="https://github.com/Zyy955/yenai-plugin/commits?author=SmallK111407" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ikechan8370"><img src="https://avatars.githubusercontent.com/u/21212372?v=4?s=100" width="100px;" alt="ikechan8370"/><br /><sub><b>ikechan8370</b></sub></a><br /><a href="https://github.com/Zyy955/yenai-plugin/commits?author=ikechan8370" title="Code">💻</a></td>
+       <td align="center" valign="top" width="14.28%"><a href="https://github.com/fsqhn"><img src="https://avatars.githubusercontent.com/u/13745793?v=4?s=100" width="100px;" alt="fsqhn"/><br /><sub><b>fsqhn</b></sub></a><br /><a href="https://github.com/Zyy955/yenai-plugin/commits?author=fsqhn" title="Code">💻</a></td>
+       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Zyy955"><img src="https://avatars.githubusercontent.com/u/74231782?v=4?s=100" width="100px;" alt="Zyy955"/><br /><sub><b>Zyy955</b></sub></a><br /><a href="https://github.com/yeyang52/yenai-plugin/commits?author=Zyy955" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>

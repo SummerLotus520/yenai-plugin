@@ -21,11 +21,11 @@ export class NewSearch extends plugin {
           fnc: 'help'
         },
         {
-          reg: '^#bgg搜索',
+          reg: '^#桌游搜索',
           fnc: 'bggSearch'
         },
         {
-          reg: '^#bgg排行$',
+          reg: '^#桌游排行$',
           fnc: 'bggRank'
         }
       ]
@@ -48,7 +48,7 @@ export class NewSearch extends plugin {
   }
 
   async bggSearch (e) {
-    let keyword = e.msg.replace(/#?bgg搜索/, '')
+    let keyword = e.msg.replace(/#?桌游搜索/, '')
     funApi.bgg(keyword)
       .then(res => e.reply(res))
       .catch(err => common.handleException(e, err))
@@ -56,6 +56,6 @@ export class NewSearch extends plugin {
 
   async bggRank (e) {
     let url = 'https://boardgamegeek.com/browse/boardgame'
-    e.reply([await puppeteer.Webpage({ url }), url])
+    e.reply([await puppeteer.Webpage({ url }), '目前BGG桌游排行榜如图，访问链接：' + url])
   }
 }
