@@ -44,7 +44,7 @@ body {
 
 .tb {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 
     .avatar {
@@ -54,6 +54,9 @@ body {
         border-radius: 50%;
         margin: 0 20px;
         flex-shrink: 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
 
         img {
             width: 100%;

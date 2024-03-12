@@ -25,15 +25,17 @@ export class NewState extends plugin {
     })
   }
 
+  async monitor (e) {
+    await puppeteer.render('state/monitor', {
+      chartData: JSON.stringify(State.chartData)
+    }, {
+      e,
+      scale: 1.4
+    })
+  }
+
   async state (e) {
-    if (e.msg.includes('监控')) {
-      return await puppeteer.render('state/monitor', {
-        chartData: JSON.stringify(State.chartData)
-      }, {
-        e,
-        scale: 1.4
-      })
-    }
+    if (e.msg.includes('监控')) return this.monitor(e)
 
     if (!/椰奶/.test(e.msg) && !Config.whole.state) return false
 
@@ -78,106 +80,22 @@ export class NewState extends plugin {
       // Node板块
       State.getNodeInfo()
     ]))
-    const defaultAvatar = `../../../../../plugins/${Plugin_Name}/resources/state/img/default_avatar.jpg`
-    // 机器人名称
-    const BotName = Version.name
-    // 系统运行时间
-    const systime = common.formatTime(os.uptime(), 'dd天hh小时mm分', false)
-    // 日历
-    const calendar = moment().format('YYYY-MM-DD HH:mm:ss')
-    let BotStatus = ''
 
     /** bot列表 */
     let BotList = [e.self_id]
-    /** TRSS */
-    if (e.msg.includes('pro') && Array.isArray(Bot?.uin)) {
-      BotList = Bot.uin
-    } else if (e.msg.includes('pro') && !Array.isArray(Bot?.uin) && Bot?.adapter && Bot?.adapter.includes(e.self_id)) {
-      /** ws-plugin、Lain-plugin多bot */
-      BotList = Bot.adapter
-    }
 
-    /** 本体 */
     if (e.msg.includes('pro')) {
-      BotStatus += `<div class="box">
-      <div class="tb">
-          <div class="avatar">
-              <img src="${YZAvatar || defaultAvatar}"
-                  onerror="this.src= '${defaultAvatar}'; this.onerror = null;">
-          </div>
-          <div class="header">
-              <h1>${BotName}</h1>
-              <hr noshade>
-              <p>适配器连接数量：${BotList.length}</p>
-              <p>${await this.getCount()}</p>
-          </div>
-      </div>
-  </div>
-  `
+      if (Array.isArray(Bot?.uin)) {
+        BotList = Bot.uin
+      } else if (Bot?.adapter && Bot.adapter.includes(e.self_id)) {
+        BotList = Bot.adapter
+      }
     }
 
-    for (const i of BotList) {
-      const bot = Bot[i]
-      if (!bot?.uin) continue
-      // 头像
-      const avatar = bot.avatar || (Number(bot.uin) ? `https://q1.qlogo.cn/g?b=qq&s=0&nk=${bot.uin}` : defaultAvatar)
-      // 昵称
-      const nickname = bot.nickname || '未知'
-      // 在线状态
-      const onlineStatus = status[bot.status] || '在线'
-      // 登录平台版本
-      const platform = bot.apk ? `${bot.apk.display} v${bot.apk.version}` : bot.version.version || '未知'
-      // 发
-      const sent = await redis.get(`Yz:count:send:msg:bot:${bot.uin}:total`) || await redis.get('Yz:count:sendMsg:total') || 0
-      // 收
-      const recv = await redis.get(`Yz:count:receive:msg:bot:${bot.uin}:total`) || await bot?.readMsg?.() || bot.stat?.recv_msg_cnt || 0
-      // 图片
-      const screenshot = await redis.get(`Yz:count:send:image:bot:${bot.uin}:total`) || await redis.get('Yz:count:screenshot:total') || 0
-      // 好友数
-      const friendQuantity = Array.from(bot.fl?.keys()).length
-      // 群数
-      const groupQuantity = Array.from(bot.gl?.keys()).length
-      // 群员数
-      let groupMemberQuantity = 0
-      for (const i of bot.gml?.values() || []) groupMemberQuantity += Array.from(i.keys()).length
-      // 频道
-      let guildsQuantity
-      try { guildsQuantity = Array.from(bot.guilds.values()).length } catch { }
-
-      /** 仅适配铃音，TRSS不变 */
-      let textMsg
-      let imageMsg
-      try {
-        textMsg = await bot?.MsgTotal?.('text')
-        imageMsg = await bot?.MsgTotal?.('image')
-      } catch { }
-
-      // 运行时间
-      const runTime = common.formatTime(Date.now() / 1000 - bot.stat?.start_time, 'dd天hh小时mm分', false)
-      // Bot版本
-      const botVersion = bot.version ? `${bot.version.name}(${bot.version.id})${bot.apk ? ` ${bot.version.version}` : ''}` : `ICQQ(QQ) v${require('icqq/package.json').version}`
-      BotStatus += `<div class="box">
-    <div class="tb">
-        <div class="avatar">
-            <img src="${avatar}"
-                onerror="this.src= '${defaultAvatar}'; this.onerror = null;">
-        </div>
-        <div class="header">
-            <h1>${nickname}</h1>
-            <hr noshade>
-            <p>${onlineStatus}(${platform}) | 收${recv} | 发${textMsg || sent} | 图片${imageMsg || screenshot}</p>
-            <p>好友数：${friendQuantity} | 群数：${groupQuantity} | 群员数：${groupMemberQuantity} | 频道数：${guildsQuantity || 0} | ${process.platform}(${process.arch})</p>
-            <p>${BotName} 已运行 ${runTime} | 系统运行 ${systime}</p>
-            <p>${calendar} | Node.js ${process.version} | ${botVersion} </p>
-        </div>
-    </div>
-</div>
-`
-    }
     // 渲染数据
     let data = {
       backdrop,
-      BotStatus,
+      BotStatus: await this.getBotState(BotList, YZAvatar),
       chartData: JSON.stringify(common.checkIfEmpty(State.chartData, ['echarts_theme', 'cpu', 'ram']) ? undefined : State.chartData),
       // 硬盘内存
       HardDisk,
@@ -201,6 +119,82 @@ export class NewState extends plugin {
     })
 
     interval = false
+  }
+
+  async getBotState (botList, YZAvatar) {
+    const defaultAvatar = `../../../../../plugins/${Plugin_Name}/resources/state/img/default_avatar.jpg`
+    const BotName = Version.name
+    const systime = common.formatTime(os.uptime(), 'dd天hh小时mm分', false)
+    const calendar = moment().format('YYYY-MM-DD HH:mm:ss')
+
+    const dataPromises = botList.map(async (i) => {
+      const bot = Bot[i]
+      if (!bot?.uin) return ''
+
+      const avatar = bot.avatar || (Number(bot.uin) ? `https://q1.qlogo.cn/g?b=qq&s=0&nk=${bot.uin}` : defaultAvatar)
+      const nickname = bot.nickname || '未知'
+      const onlineStatus = status[bot.status] || '在线'
+      const platform = bot.apk ? `${bot.apk.display} v${bot.apk.version}` : bot.version?.version || '未知'
+
+      const [sent, recv, screenshot] = await Promise.all([
+        redis.get(`Yz:count:send:msg:bot:${bot.uin}:total`),
+        redis.get(`Yz:count:receive:msg:bot:${bot.uin}:total`) || bot.stat?.recv_msg_cnt || '未知',
+        redis.get(`Yz:count:send:image:bot:${bot.uin}:total`)
+      ])
+
+      const friendQuantity = bot.fl?.size || 0
+      const groupQuantity = bot.gl?.size || 0
+      const groupMemberQuantity = Array.from(bot.gml?.values() || []).reduce((acc, curr) => acc + curr.size, 0)
+      const runTime = common.formatTime(Date.now() / 1000 - bot.stat?.start_time, 'dd天hh小时mm分', false)
+      const botVersion = bot.version ? `${bot.version.name}(${bot.version.id})${bot.apk ? ` ${bot.version.version}` : ''}` : `ICQQ(QQ) v${require('icqq/package.json').version}`
+      // 频道
+      let guildsQuantity
+      try { guildsQuantity = Array.from(bot.guilds.values()).length } catch { }
+
+      // /** 仅适配铃音，TRSS不变 */
+      // let textMsg
+      // let imageMsg
+      // try {
+      //   textMsg = await bot?.MsgTotal?.('text')
+      //   imageMsg = await bot?.MsgTotal?.('image')
+      // } catch { }
+
+      return `<div class="box">
+    <div class="tb">
+        <div class="avatar">
+            <img src="${avatar}"
+                onerror="this.src= '${defaultAvatar}'; this.onerror = null;">
+        </div>
+        <div class="header">
+            <h1>${nickname}</h1>
+            <hr noshade>
+            <p>${onlineStatus}(${platform}) | 收${recv || 0} | 发${sent || 0} | 图片${screenshot || 0}</p>
+            <p>好友：${friendQuantity} | 群：${groupQuantity} | 群员：${groupMemberQuantity} | 频道：${guildsQuantity || 0} | ${process.platform}(${process.arch})</p>
+            <p>${BotName} 已运行 ${runTime} | 系统运行 ${systime}</p>
+            <p>${calendar} | Node.js ${process.version} | ${botVersion} </p>
+        </div>
+    </div>
+</div>
+`
+    })
+
+    const dataArray = await Promise.all(dataPromises)
+    dataArray.unshift(`<div class="box">
+      <div class="tb">
+          <div class="avatar">
+              <img src="${YZAvatar || defaultAvatar}"
+                  onerror="this.src= '${defaultAvatar}'; this.onerror = null;">
+          </div>
+          <div class="header">
+              <h1>${BotName}</h1>
+              <hr noshade>
+              <p>适配器连接数量：${botList.length}</p>
+              <p>${await this.getCount()}</p>
+          </div>
+      </div>
+  </div>
+  `)
+    return dataArray.join('')
   }
 
   async getCount () {

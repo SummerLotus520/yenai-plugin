@@ -438,18 +438,22 @@ export default class {
       // shamrock不管点没点上一律返回ok。。只好自己伪造了，不然椰奶会死循环，暂不考虑svip的情况。
       try {
         const type = (this.e.adapter === 'shamrock') ? 'shamrock' : 'LagrangeCore'
-        const Api = (await import(`../../../Lain-plugin/adapter/${type}/api.js`)).default
         /** 拉格朗需要发10次 */
         if (type === 'LagrangeCore') {
-          for (let i = 0; i < 10; i++) {
-            await Api.send_like(this.e.self_id, uid, 1)
+          times = times / 10
+          for (let i; i < times; i++) {
+            await this.e.bot.sendApi('send_like', { user_id: uid, times: 10 })
           }
         } else {
+          if (this.e.adapter === 'shamrock' && times > 20) times = 20
+          const Api = (await import(`../../../Lain-plugin/adapter/${type}/api.js`)).default
           await Api.send_like(this.e.self_id, uid, times)
         }
       } catch (err) {
-        logger.error(err)
-        return { code: 1, msg: 'Shamrock点赞失败，请查看日志' }
+        if (this.e.adapter !== 'LagrangeCore') {
+          logger.error(err)
+          return { code: 1, msg: 'Shamrock点赞失败，请查看日志' }
+        }
       }
       if (lock) {
         // 今天点过了
@@ -471,10 +475,15 @@ export default class {
       try {
         core = (await import('icqq')).core
       } catch (error) {
-        throw Error('非icqq无法进行点赞')
+        const thumbUp = this.Bot.pickFriend(uid).thumbUp
+        if (!thumbUp) throw Error('当前适配器不支持点赞')
+        const res = { ...await thumbUp(times) }
+        if (res.retcode && !res.code) { res.code = res.retcode }
+        if (res.message && !res.msg) { res.msg = res.message }
+        return res
       }
     }
-    if (times > 20) { times = 20 }
+
     let ReqFavorite
     if (this.Bot.fl.get(uid)) {
       ReqFavorite = core.jce.encodeStruct([
