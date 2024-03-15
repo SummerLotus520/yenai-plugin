@@ -95,7 +95,7 @@ export class NewState extends plugin {
     // 渲染数据
     let data = {
       backdrop,
-      BotStatus: await this.getBotState(BotList, YZAvatar),
+      BotStatus: await this.getBotState(BotList, e, YZAvatar),
       chartData: JSON.stringify(common.checkIfEmpty(State.chartData, ['echarts_theme', 'cpu', 'ram']) ? undefined : State.chartData),
       // 硬盘内存
       HardDisk,
@@ -121,7 +121,7 @@ export class NewState extends plugin {
     interval = false
   }
 
-  async getBotState (botList, YZAvatar) {
+  async getBotState (botList, e, YZAvatar) {
     const defaultAvatar = `../../../../../plugins/${Plugin_Name}/resources/state/img/default_avatar.jpg`
     const BotName = Version.name
     const systime = common.formatTime(os.uptime(), 'dd天hh小时mm分', false)
@@ -179,7 +179,8 @@ export class NewState extends plugin {
     })
 
     const dataArray = await Promise.all(dataPromises)
-    dataArray.unshift(`<div class="box">
+    if (this.e.msg.includes('pro')) {
+      dataArray.unshift(`<div class="box">
       <div class="tb">
           <div class="avatar">
               <img src="${YZAvatar || defaultAvatar}"
@@ -194,6 +195,7 @@ export class NewState extends plugin {
       </div>
   </div>
   `)
+    }
     return dataArray.join('')
   }
 
