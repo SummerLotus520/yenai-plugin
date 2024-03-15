@@ -428,22 +428,28 @@ export default class {
      */
   async thumbUp (uid, times = 1) {
     /** Chronocat点赞 */
-    if (this.Bot?.sendLike && this.e.adapter?.red) return this.Bot.sendLike(uid, times)
+    if (this.Bot?.sendLike && this.e.adapter?.red) return this.Bot.sendLike(uid, times > 20 ? 20 : times)
     /** Shamrock、LagrangeCore点赞 */
     if (this.e?.adapter && (this.e.adapter === 'shamrock' || this.e.adapter === 'LagrangeCore')) {
       // 劫持为shamrock点赞
       let target = (this.e.at && this.e.msg.includes('他', '她', '它', 'TA', 'ta', 'Ta')) ? this.e.at : this.e.user_id
       let lock = await redis.get(`lain:thumbup:${this.e.self_id}_${target}`)
 
+      if (lock) {
+        // 今天点过了
+        return { code: 2, msg: '今天已经赞过了，还搁这讨赞呢！！！' }
+      }
+
       // shamrock不管点没点上一律返回ok。。只好自己伪造了，不然椰奶会死循环，暂不考虑svip的情况。
       try {
         const type = (this.e.adapter === 'shamrock') ? 'shamrock' : 'LagrangeCore'
         /** 拉格朗需要发10次 */
         if (type === 'LagrangeCore') {
-          times = times / 10
-          for (let i; i < times; i++) {
-            await this.e.bot.sendApi('send_like', { user_id: uid, times: 10 })
+          const list = []
+          for (let i = 0; i < times; i++) {
+            list.push(this.e.bot.sendApi('send_like', { user_id: uid, times: 1 }))
           }
+          await Promise.all(list)
         } else {
           if (this.e.adapter === 'shamrock' && times > 20) times = 20
           const Api = (await import(`../../../Lain-plugin/adapter/${type}/api.js`)).default
@@ -455,19 +461,13 @@ export default class {
           return { code: 1, msg: 'Shamrock点赞失败，请查看日志' }
         }
       }
-      if (lock) {
-        // 今天点过了
-        return { code: 2, msg: '今天已经赞过了，还搁这讨赞呢！！！' }
-      } else {
-        const now = new Date()
-        const tomorrow = new Date(now)
-        tomorrow.setDate(tomorrow.getDate() + 1)
-        tomorrow.setHours(0, 0, 0, 0)
-        const secondsUntilMidnight = Math.floor((tomorrow - now) / 1000)
-        await redis.set(`lain:thumbup:${this.e.self_id}_${target}`, '1', { EX: secondsUntilMidnight })
-        lock = true
-        return { code: 0, msg: '点赞成功' }
-      }
+      const now = new Date()
+      const tomorrow = new Date(now)
+      tomorrow.setDate(tomorrow.getDate() + 1)
+      tomorrow.setHours(0, 0, 0, 0)
+      const secondsUntilMidnight = Math.floor((tomorrow - now) / 1000)
+      await redis.set(`lain:thumbup:${this.e.self_id}_${target}`, '1', { EX: secondsUntilMidnight })
+      return { code: 0, msg: '点赞成功' }
     }
 
     let core = this.Bot.icqq?.core
