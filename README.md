@@ -54,7 +54,7 @@ git clone --depth=1 https://gitee.com/Zyy955/yenai-plugin.git ./plugins/yenai-pl
 
 Github：
 ```
-git clone --depth=1 https://github.com/Zyy955/yenai-plugin.git ./plugins/yenai-plugin
+git clone --depth=1 https://github.com/Loli-Lain/yenai-plugin.git ./plugins/yenai-plugin
 ```
 
 2. 安装依赖(可选：不安装依赖将无法使用一些功能)
