@@ -151,14 +151,6 @@ export class NewState extends plugin {
       let guildsQuantity
       try { guildsQuantity = Array.from(bot.guilds.values()).length } catch { }
 
-      // /** 仅适配铃音，TRSS不变 */
-      // let textMsg
-      // let imageMsg
-      // try {
-      //   textMsg = await bot?.MsgTotal?.('text')
-      //   imageMsg = await bot?.MsgTotal?.('image')
-      // } catch { }
-
       return `<div class="box">
     <div class="tb">
         <div class="avatar">

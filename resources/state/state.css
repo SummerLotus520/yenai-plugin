@@ -55,6 +55,9 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  overflow: hidden; /* 溢出隐藏 */
+  outline: 5px solid #eeecec; /* 轮廓 */
+  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.4); /* 阴影 */
 }
 .tb .avatar img {
   width: 100%;
@@ -91,6 +94,10 @@ hr {
 }
 .header h1 {
   display: inline-block;
+  background: linear-gradient(135deg, #5ce2e2, #a985f7); /* 蓝紫渐变 */
+  -webkit-background-clip: text; /* WebKit 浏览器支持的属性 */
+  background-clip: text; /* 设置背景只在文字上显示 */
+  color: transparent; /* 让文字透明 */
 }
 
 .info {

@@ -17,8 +17,8 @@ statusTask: true
 #如果出现内存异常的情况可将此配置项开启，如果打开后报错请将监控任务关闭
 statusPowerShellStart: false
 
-#背景图片api 默认https://api.suyanw.cn/api/comic2
-backdrop: "https://api.suyanw.cn/api/comic2"
+#背景图片api 可键入本地绝对路径和http地址
+backdrop: ""
 
 # 本体自定义头像 可填入url和本地路径
 YZAvatar: ""
