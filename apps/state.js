@@ -62,7 +62,7 @@ export class NewState extends plugin {
 
     // 网络测试
     let psTest = []
-    let { psTestSites, psTestTimeout, backdrop, YZAvatar } = Config.state
+    let { psTestSites, psTestTimeout, backdrop, YZAvatar, Gradient } = Config.state
     psTestSites && promiseTaskList.push(...psTestSites?.map(i => State.getNetworkLatency(i.url, psTestTimeout).then(res => psTest.push({
       first: i.name,
       tail: res
@@ -95,6 +95,7 @@ export class NewState extends plugin {
     // 渲染数据
     let data = {
       backdrop,
+      Gradient: JSON.stringify(Gradient),
       BotStatus: await this.getBotState(BotList, e, YZAvatar),
       chartData: JSON.stringify(common.checkIfEmpty(State.chartData, ['echarts_theme', 'cpu', 'ram']) ? undefined : State.chartData),
       // 硬盘内存

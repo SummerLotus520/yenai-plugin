@@ -33,11 +33,19 @@
     </ul>
     <script>
         const backdrop = "{{@backdrop}}"
-        // 背景api
+        /* 背景api */
         if (backdrop) {
-            var container = document.getElementById('container')
+            const container = document.getElementById('container')
             container.style.backgroundImage = 'url(' + backdrop + ')'
         }
+        /* 随机渐变色 */
+        const Gradient =JSON.parse(`{{@Gradient}}`) 
+        const color = Gradient[Math.floor(Math.random() * Gradient.length)]
+        document.querySelectorAll('.header h1').forEach(function (element) {
+            element.style.background = `linear-gradient(135deg, ${color})`
+            /* 不知道为啥捏 不加这个不显示 */
+            element.style.webkitBackgroundClip = 'text'; /* WebKit 浏览器支持的属性 */
+        })
     </script>
 </div>
 

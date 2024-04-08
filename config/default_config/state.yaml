@@ -22,3 +22,8 @@ backdrop: ""
 
 # 本体自定义头像 可填入url和本地路径
 YZAvatar: ""
+
+# 渐变色
+Gradient:
+  - '#5ce2e2, #ea85f7' # 蓝紫渐变
+  - '#ea85f7, #5ce2e2' # 紫蓝渐变
