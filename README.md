@@ -49,5 +49,3 @@ pnpm install
 💬：702211431
 
 ❤️：[打赏](https://afdian.net/a/MopeLotus)
-
-![Alt](https://repobeats.axiom.co/api/embed/42b5a7769074be124bd9ab02456897e37d1581f1.svg "Repobeats analytics image")
