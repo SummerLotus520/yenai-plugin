@@ -47,14 +47,9 @@
 
 1. 推荐使用git进行安装，以方便后续升级。在Yunzai目录打开终端，运行
 
-Gitee：
-```
-git clone --depth=1 https://gitee.com/Zyy955/yenai-plugin.git ./plugins/yenai-plugin
-```
-
 Github：
 ```
-git clone --depth=1 https://github.com/Loli-Lain/yenai-plugin.git ./plugins/yenai-plugin
+git clone --depth=1 https://github.com/SummerLotus520/yenai-plugin.git ./plugins/yenai-plugin
 ```
 
 2. 安装依赖(可选：不安装依赖将无法使用一些功能)
@@ -246,7 +241,6 @@ Tip：具体可使用 **#椰奶群管帮助** 查看
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/TimeRainStarSky"><img src="https://avatars.githubusercontent.com/u/63490117?v=4?s=100" width="100px;" alt="时雨◎星空"/><br /><sub><b>时雨◎星空</b></sub></a><br /><a href="https://github.com/Loli-Lain/yenai-plugin/commits?author=TimeRainStarSky" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Saury-loser"><img src="https://avatars.githubusercontent.com/u/106982493?v=4?s=100" width="100px;" alt="花海里的秋刀鱼"/><br /><sub><b>花海里的秋刀鱼</b></sub></a><br /><a href="https://github.com/Loli-Lain/yenai-plugin/commits?author=Saury-loser" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Georgebillion"><img src="https://avatars.githubusercontent.com/u/40432824?v=4?s=100" width="100px;" alt="Georgebillion"/><br /><sub><b>Georgebillion</b></sub></a><br /><a href="#ideas-Georgebillion" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/xfdown"><img src="https://avatars.githubusercontent.com/u/42599406?v=4?s=100" width="100px;" alt="小飞"/><br /><sub><b>小飞</b></sub></a><br /><a href="#ideas-xfdown" title="Ideas, Planning, & Feedback">🤔</a></td>
@@ -283,10 +277,10 @@ Tip：具体可使用 **#椰奶群管帮助** 查看
 
 ## 联系方式 <img src="https://media.giphy.com/media/VgCDAzcKvsR6OM0uWg/giphy.gif" width="50">
 
-🐧：746659424
+🐧：1102305070
 
-💬：254974507(已锁)
+💬：702211431(已锁)
 
-❤️：[打赏](https://www.yenai.ren/donate.html)
+❤️：[打赏](https://afdian.net/a/MopeLotus)
 
 ![Alt](https://repobeats.axiom.co/api/embed/42b5a7769074be124bd9ab02456897e37d1581f1.svg "Repobeats analytics image")
