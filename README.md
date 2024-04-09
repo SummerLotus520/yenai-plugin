@@ -14,8 +14,6 @@
 
 <div align="center">
 
-[![Star Trend](https://api.star-history.com/svg?repos=Loli-Lain/yenai-plugin&type=Timeline)](https://seladb.github.io/StarTrack-js/#/preload?r=Loli-Lain,yenai-plugin)
-
 </div>
 
 ---
