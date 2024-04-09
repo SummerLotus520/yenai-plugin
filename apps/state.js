@@ -147,7 +147,7 @@ export class NewState extends plugin {
       const groupQuantity = bot.gl?.size || 0
       const groupMemberQuantity = Array.from(bot.gml?.values() || []).reduce((acc, curr) => acc + curr.size, 0)
       const runTime = common.formatTime(Date.now() / 1000 - bot.stat?.start_time, 'dd天hh小时mm分', false)
-      const botVersion = bot.version ? `${bot.version.name}(${bot.version.id})${bot.apk ? ` ${bot.version.version}` : ''}` : `ICQQ(QQ) v${require('icqq/package.json').version}`
+      const botVersion = bot.version ? `${bot.version.name}(${bot.version.id})${bot.apk ? ` ${bot.version.version}` : ''}` : `ICQQ(QQ) v${require('@icqqjs/icqq/package.json').version}`
       // 频道
       let guildsQuantity
       try { guildsQuantity = Array.from(bot.guilds.values()).length } catch { }
